@@ -21,4 +21,4 @@ path = []
 found = dls(graph, start_node, goal_node, limit, path)
 
 print(f"Goal {goal_node} reached within limit {limit}: {path if found else 'Not Found'}")
-show_student_info()
+show_student_info("4 - DLS")

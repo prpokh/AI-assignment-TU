@@ -21,4 +21,4 @@ def a_star(graph, h, start, goal):
 
 cost, path = a_star(graph, heuristics, start_node, goal_node)
 print(f"A* Path: {path} with Cost: {cost}")
-show_student_info()
+show_student_info("5 - A*")

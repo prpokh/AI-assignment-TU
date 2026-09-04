@@ -39,3 +39,23 @@ heuristics = {
 
 start_node = 'S'
 goal_node = 'G'
+
+# --- Game Tree Data for Minimax & Alpha-Beta (Question 7) ---
+# Adjacency representing tree hierarchy from Root down to leaves
+game_tree = {
+    'ROOT': ['MIN_1', 'MIN_2'],
+    'MIN_1': ['MAX_1', 'MAX_2'],
+    'MIN_2': ['MAX_3', 'MAX_4'],
+    'MAX_1': ['L1', 'L2'],
+    'MAX_2': ['L3', 'L4'],
+    'MAX_3': ['L5', 'L6'],
+    'MAX_4': ['L7', 'L8']
+}
+
+# Terminal evaluation values for leaves L1 through L8
+leaf_values = {
+    'L1': 3, 'L2': 5,
+    'L3': 6, 'L4': 9,
+    'L5': 1, 'L6': 2,
+    'L7': 0, 'L8': -1
+}

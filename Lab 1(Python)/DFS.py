@@ -23,4 +23,4 @@ def dfs(graph, node, goal, visited=None, path=None):
 
 path = dfs(graph, start_node, goal_node)
 print(f"DFS Path from {start_node} to {goal_node}: {path}")
-show_student_info()
+show_student_info("2 - DFS")

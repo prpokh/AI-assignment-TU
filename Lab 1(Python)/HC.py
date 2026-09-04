@@ -24,4 +24,4 @@ def hill_climbing(graph, h, start):
 path, peak, h_val = hill_climbing(graph, heuristics, start_node)
 print(f"Hill Climbing Path: {path}")
 print(f"Terminated at Node: {peak} with Heuristic: {h_val}")
-show_student_info()
+show_student_info("6 - HC")

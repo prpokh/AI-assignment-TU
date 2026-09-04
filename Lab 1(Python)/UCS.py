@@ -22,4 +22,4 @@ def ucs(graph, start, goal):
 
 cost, path = ucs(graph, start_node, goal_node)
 print(f"UCS Optimal Path: {path} with Total Cost: {cost}")
-show_student_info()
+show_student_info("3 - UCS")

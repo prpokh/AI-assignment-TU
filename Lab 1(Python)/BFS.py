@@ -20,4 +20,4 @@ def bfs(graph, start, goal):
 
 path = bfs(graph, start_node, goal_node)
 print(f"BFS Path from {start_node} to {goal_node}: {path}")
-show_student_info()
+show_student_info("1 - BFS")
