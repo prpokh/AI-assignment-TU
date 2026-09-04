@@ -1,74 +1,83 @@
 import matplotlib.pyplot as plt
 import networkx as nx
+from common_data import graph, heuristics, start_node, goal_node
 
-# 1. Initialize an undirected graph
-G = nx.Graph()
+# 1. Initialize directed graph
+G = nx.DiGraph()
 
-# 2. Add edges with weights
-edges = [
-    ('A', 'B', 4), ('A', 'F', 2),
-    ('B', 'C', 3), ('B', 'D', 2),
-    ('C', 'D', 1), ('C', 'E', 5),
-    ('D', 'E', 7),
-    ('F', 'G', 1), ('F', 'H', 3),
-    ('G', 'I', 1),
-    ('H', 'I', 2),
-    ('E', 'I', 2), ('E', 'J', 3),
-    ('I', 'J', 5)
-]
+for u, neighbors in graph.items():
+    for v, w in neighbors:
+        G.add_edge(u, v, weight=w)
 
-for u, v, w in edges:
-    G.add_edge(u, v, weight=w)
-
-# 3. Node Heuristics h(n)
-heuristics = {
-    'A': 10, 'B': 3, 'C': 2, 'D': 2, 'E': 3,
-    'F': 5,  'G': 4, 'H': 3, 'I': 0, 'J': 0
-}
-
-# 4. Manual coordinates matching the diagram layout
+# 2. Geometric coordinates matching the diagram layout
 pos = {
-    'A': (5, 9),
-    'B': (3, 6.5),
-    'F': (7.5, 7.5),
-    'D': (4.8, 5.8),
-    'G': (6.3, 6.7),
-    'H': (8.5, 5.8),
-    'C': (2.8, 4.3),
-    'I': (7.2, 5.0),
-    'E': (4.8, 2.7),
-    'J': (6.3, 2.0)
+    'S': (4.0, 8.0),
+    'A': (2.0, 6.0),
+    'B': (6.0, 6.0),
+    'C': (1.0, 4.0),
+    'D': (3.5, 4.0),
+    'E': (7.0, 4.0),
+    'F': (2.5, 1.8),
+    'G': (5.5, 1.8)
 }
 
-# 5. Plot setup
-plt.figure(figsize=(8, 9))
-plt.title("LAB-I: Search Graph", fontsize=14, fontweight="bold")
+# 3. Canvas setup
+plt.figure(figsize=(9, 8))
+plt.title("LAB-I: State Space Search Graph", fontsize=15, fontweight="bold", pad=20)
 
-# Draw Nodes
-nx.draw_networkx_nodes(G, pos, node_size=1200, node_color='white', edgecolors='black', linewidths=1.8)
+# Draw edges with directional arrows
+nx.draw_networkx_edges(
+    G, pos,
+    arrowstyle="->",
+    arrowsize=18,
+    edge_color="#333333",
+    width=1.8,
+    node_size=1600
+)
 
-# Draw Node Names (inside circles)
-nx.draw_networkx_labels(G, pos, font_size=12, font_family='sans-serif', font_weight='bold')
+# Highlight Start (green) and Goal (orange)
+node_colors = []
+for node in G.nodes():
+    if node == start_node:
+        node_colors.append("#d4edda")  # Soft green
+    elif node == goal_node:
+        node_colors.append("#ffeeba")  # Soft amber
+    else:
+        node_colors.append("#ffffff")  # White
 
-# Draw Edges
-nx.draw_networkx_edges(G, pos, width=1.5, edge_color='black')
+# Draw node circles
+nx.draw_networkx_nodes(
+    G, pos,
+    node_size=1500,
+    node_color=node_colors,
+    edgecolors="black",
+    linewidths=2.0
+)
 
-# Draw Edge Costs (weights)
+# Draw node letter labels inside circles
+nx.draw_networkx_labels(G, pos, font_size=13, font_weight="bold")
+
+# Draw edge weights (step costs)
 edge_labels = nx.get_edge_attributes(G, 'weight')
-nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=11, font_color='black')
+nx.draw_networkx_edge_labels(
+    G, pos,
+    edge_labels=edge_labels,
+    font_size=11,
+    font_color="#b30000",
+    font_weight="bold"
+)
 
-# Draw Heuristic values next to each node (offset slightly to the top-left)
-offset_pos = {
-    k: (v[0] - 0.25, v[1] + 0.35) for k, v in pos.items()
-}
-# Adjust 'A' to be directly above
-offset_pos['A'] = (pos['A'][0], pos['A'][1] + 0.4)
+# Render heuristic values h(n) right above each node
+for node, (x, y) in pos.items():
+    h_text = f"h={heuristics[node]}"
+    plt.text(x, y + 0.42, h_text, fontsize=11, fontweight="bold", color="#004085", ha="center")
 
-for node, (x, y) in offset_pos.items():
-    plt.text(x, y, str(heuristics[node]), fontsize=11, fontweight='bold', color='black', ha='center')
+# Visual legends
+plt.text(0.5, 8.5, f"Start Node: {start_node}", fontsize=11, color="green", fontweight="bold")
+plt.text(0.5, 8.1, f"Goal Node : {goal_node}", fontsize=11, color="orange", fontweight="bold")
 
-# Adjust layout and save high-resolution image for A4 printing
-plt.axis('off')
+plt.axis("off")
 plt.tight_layout()
 plt.savefig("lab1_graph.png", dpi=300)
+print("Graph saved successfully as 'lab1_graph.png'.")
 plt.show()
