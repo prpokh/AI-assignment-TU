@@ -2,8 +2,8 @@
 
 # Student metadata dictionary
 STUDENT_INFO = {
-    "Name": "Your Full Name",
-    "Roll No": "Your Roll Number",
+    "Name": "Prasanna Pokharel",
+    "Roll No": "24",
     "Lab Number": "Lab I"
 }
 
