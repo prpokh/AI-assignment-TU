@@ -19,6 +19,7 @@ did_not_study(X) :-
     student(X),
     \+ studied(X).
 
+
 print_footer :-
     nl,
     write('-----------------------------'), nl,
